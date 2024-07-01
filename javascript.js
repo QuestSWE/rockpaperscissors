@@ -26,29 +26,26 @@
 
 function getHumanChoice(string) {
   let validChoice = false;
-  console.log(validChoice);
+  // console.log(validChoice);
 
   while (!validChoice) {
     let choices = prompt("Rock, Paper or Scissors?");
 
-    if (choices === "Rock") {
+    if (choices.toLowerCase() === "rock") {
       console.log("Rock");
       validChoice = true;
-      alert("You chose Rock!");
-      console.log(validChoice);
-    } else if (choices === "Paper") {
+      return alert("You chose Rock!");
+    } else if (choices.toLowerCase() === "paper") {
       console.log("Paper");
-      alert("You chose Paper!");
       validChoice = true;
-      console.log(validChoice);
-    } else if (choices === "Scissors") {
+      return alert("You chose Paper!");
+    } else if (choices.toLowerCase() === "scissors") {
       console.log("Scissors");
-      alert("You chose Scissors!");
       validChoice = true;
-      console.log(validChoice);
-    } else alert("Invalid choice, please choose between Rock, Paper or Scissors");
+      return alert("You chose Scissors!");
+    } else
+      alert("Invalid choice, please choose between Rock, Paper or Scissors");
   }
 }
 
-// prompt("Input invalid, please choose between Rock, Paper or Scissors");
 getHumanChoice();
