@@ -1,34 +1,32 @@
 const humanScore = 0;
 const computerScore = 0;
 
-function getComputerChoice(n) {
+function getComputerChoice() {
   // Generates a number between 1 and 3
   let result = Math.floor(Math.random() * 3) + 1;
-  console.log(result);
+  // console.log(result);
+  if (result === 1) {
+    return "rock";
+  } else if (result === 2) {
+    return "paper";
+  } else return "scissors";
 }
 
-function getHumanChoice(string) {
+function getHumanChoice() {
   let choices = prompt("Rock, Paper or Scissors?");
-
-  let humanChoice = {
-    rock: 1,
-    paper: 2,
-    scissors: 3,
-  };
-
-  let lowerCaseInput = choices.toLowerCase();
-
-  let humanChoices = humanChoice[lowerCaseInput];
-  return console.log(humanChoices);
+  let choice = choices.toLowerCase();
+  if (choice !== "rock" && choice !== "paper" && choice !== "scissors") {
+    alert("Invalid input, please choose between rock, paper or scissors");
+  } else return choice;
 }
 
-function playRound(getHumanChoice, getComputerChoice) {
-  let numToStr = {
-    1: "Rock",
-    2: "Paper",
-    3: "Scissors",
-  };
+function playRound(humanChoice, computerChoice) {
+  
+  // console.log(humanChoice,  `CPU ${computerChoice} `);
 }
-getComputerChoice();
-getHumanChoice();
-// playRound();
+
+const humanSelection = getHumanChoice();
+// console.log(humanSelection);
+const computerSelection = getComputerChoice();
+// console.log("CPU", computerSelection);
+playRound(humanSelection, computerSelection);
