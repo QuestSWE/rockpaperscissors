@@ -73,16 +73,30 @@ function playRound(humanChoice, computerChoice) {
       `Human Score is Still ---> ${humanScore} |*| Computer Score is Still ---> ${computerScore}`
     );
   }
-
   console.log(
     `User Choice: ${humanChoice},  Computer Choice: ${computerChoice}`
   );
 }
+
+function playGame() {
+  let currentRound = 0;
+  const maxRound = 5;
+
+  while (currentRound < maxRound) {
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+    currentRound++;
+    console.log(`This is the current round ---> ${currentRound}`);
+  }
+}
+
 humanScore = 0;
 computerScore = 0;
 
-const humanSelection = getHumanChoice();
-// console.log(humanSelection);
-const computerSelection = getComputerChoice();
-// console.log("CPU", computerSelection);
-playRound(humanSelection, computerSelection);
+// getHumanChoice();
+// getComputerChoice();
+
+// playRound(humanSelection, computerSelection);
+
+playGame();
