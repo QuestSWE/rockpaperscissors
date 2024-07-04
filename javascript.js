@@ -1,6 +1,5 @@
-// TODO play around with the array below
 let roundValue = [];
-console.log(roundValue);
+
 
 function getComputerChoice() {
   // Generates a number between 1 and 3
@@ -127,12 +126,17 @@ function playGame() {
     currentRound++;
     // TODO play around with the line below
     roundValue.push(currentRound);
-    console.log(roundValue);
+    currentRound = roundValue.length;
     console.log(
       `This is the current round ---> %c${currentRound}`,
       "color: green; font-weight: bold;"
     );
   }
+  // const humanSelection = getHumanChoice();
+  
+  // if (humanSelection !== "rock" && humanSelection !== "paper" && humanSelection !== "scissors") {
+  //   currentRound--;
+  // }
 
   if (humanScore > computerScore && currentRound === 5) {
     alert(`YOU WON! YOU DESTROYED THE COMPUTER! WEAK!`);
@@ -142,16 +146,17 @@ function playGame() {
     alert(`IT'S A TIE!`);
   }
 }
-// TODO test this function deeper
-function getRoundValue() {
-  return console.log(roundValue);
-}
+// // TODO test this function deeper
+// function getRoundValue() {
+//   console.log(roundValue);
+//   return roundValue;
+// }
 
 let humanScore = 0;
 let computerScore = 0;
 // console.log(currentRound);
 // const currentRoundValue = getRoundValue();
 // console.log(`THIS IS THE ROUND VALUE ${currentRoundValue[0]}`);
+// console.log('Round values:', roundValue);
+// getRoundValue();
 playGame();
-
-getRoundValue();
