@@ -1,5 +1,8 @@
 let roundValue = [];
-
+// Initialize scores and start the game
+let humanScore = 0;
+let computerScore = 0;
+let currentRound = 0;
 // Function to get the computer's choice
 // Randomly returns "rock", "paper", or "scissors"
 function getComputerChoice() {
@@ -26,7 +29,7 @@ function getHumanChoice() {
   let choice = choices.toLowerCase();
   if (choice !== "rock" && choice !== "paper" && choice !== "scissors") {
     alert("Invalid input, please choose between rock, paper or scissors");
-    playGame();
+    return getHumanChoice();
   } else {
     return choice;
   }
@@ -38,43 +41,36 @@ function getHumanChoice() {
 function playRound(humanChoice, computerChoice) {
   if (humanChoice === "rock" && computerChoice === "paper") {
     computerScore++;
-    console.log("Computer Chose Paper. You Lose, Paper Beats Rock!");
+    console.log("Computer Chose Paper. You Lose! Paper Beats Rock!");
   } else if (humanChoice === "rock" && computerChoice === "scissors") {
     humanScore++;
-    console.log("You Won! Rock beats Scissors!");
+    console.log("Computer Chose Scissors. You Won! Rock beats Scissors!");
   } else if (humanChoice === "rock" && computerChoice === "rock") {
-    console.log("It's a Tie!");
+    console.log("Computer Also Chose Rock. It's a Tie!");
   } else if (humanChoice === "paper" && computerChoice === "rock") {
     humanScore++;
-    console.log("You Won! Paper beats Rock!");
+    console.log("Computer Chose Rock. You Won! Paper beats Rock!");
   } else if (humanChoice === "paper" && computerChoice === "scissors") {
     computerScore++;
-    console.log("You Lose! Scissors beats Paper!");
+    console.log("Computer Chose Scissors. You Lose! Scissors beats Paper!");
   } else if (humanChoice === "paper" && computerChoice === "paper") {
-    console.log("It's a Tie!");
+    console.log("Computer Also Chose Paper. It's a Tie!");
   } else if (humanChoice === "scissors" && computerChoice === "rock") {
     computerScore++;
-    console.log("You Lose! Rock beats Scissors");
+    console.log("Computer Chose Rock. You Lose! Rock beats Scissors");
   } else if (humanChoice === "scissors" && computerChoice === "paper") {
     humanScore++;
-    console.log("You Won! Scissors beats Paper");
+    console.log("Computer Chose Paper. You Won! Scissors beats Paper");
   } else if (humanChoice === "scissors" && computerChoice === "scissors") {
-    console.log("It's a Tie!");
+    console.log("Computer Also Chose Scissors. It's a Tie!");
   }
-
-  // Logs the current scores
-  console.log(
-    `Human Score is Now ---> %c${humanScore}%c |*| Computer Score is Now ---> %c${computerScore}`,
-    "color: orange; font-weight: bold;",
-    "",
-    "color: orange; font-weight: bold;"
-  );
 }
 
 // Main function to play the game
 // Handles the overall game flow, including rounds and score tracking
 function playGame() {
-  let currentRound = 0;
+  currentRound = 0;
+  console.clear();
   const maxRound = 5;
 
   while (currentRound < maxRound) {
@@ -89,8 +85,14 @@ function playGame() {
     playRound(humanSelection, computerSelection);
     currentRound++;
     roundValue.push(currentRound);
-    currentRound = roundValue.length;
     if (currentRound < 6) {
+      // Logs the current scores
+      console.log(
+        `Human Score is Now ---> %c${humanScore}%c |*| Computer Score is Now ---> %c${computerScore}`,
+        "color: orange; font-weight: bold;",
+        "",
+        "color: orange; font-weight: bold;"
+      );
       console.log(
         `This is the current round ---> %c${currentRound}`,
         "color: green; font-weight: bold;"
@@ -100,18 +102,26 @@ function playGame() {
 
   // Determines the final result of the game
   if (humanScore > computerScore && currentRound === 5) {
-    console.log(`YOU WON! YOU DESTROYED THE COMPUTER! WEAK!`);
-    alert(`YOU WON! YOU DESTROYED THE COMPUTER! WEAK!`);
+    console.log(`YOU WON THE GAME! YOU DESTROYED THE COMPUTER! WEAK!`);
+    alert(`YOU WON THE GAME! YOU DESTROYED THE COMPUTER! WEAK!`);
   } else if (humanScore < computerScore && currentRound === 5) {
-    console.log(`YOU LOST! THE COMPUTER DESTROYED YOU! CRINGE!`);
-    alert(`YOU LOST! THE COMPUTER DESTROYED YOU! CRINGE!`);
+    console.log(`YOU LOST THE GAME! THE COMPUTER DESTROYED YOU! CRINGE!`);
+    alert(`YOU LOST THE GAME! THE COMPUTER DESTROYED YOU! CRINGE!`);
   } else if (humanScore === computerScore && currentRound === 5) {
-    alert(`IT'S A TIE!`);
-    console.log(`IT'S A TIE!`);
+    alert(`THE GAME IS A TIE!`);
+    console.log(`THE GAME IS A TIE!`);
   }
+  playAgain();
 }
 
-// Initialize scores and start the game
-let humanScore = 0;
-let computerScore = 0;
+function playAgain() {
+  const play = confirm(`Do you want to play again?`);
+
+  if (play === true) {
+    humanScore = 0;
+    computerScore = 0;
+    playGame();
+  } else return;
+}
+
 playGame();
