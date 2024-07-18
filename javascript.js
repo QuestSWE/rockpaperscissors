@@ -54,7 +54,10 @@ function playGame(humanChoice, computerChoice) {
     computerScore++;
     console.log("computer score", computerScore);
   }
+  winnerAnnouncement();
+}
 
+function winnerAnnouncement() {
   if (humanScore === 5) {
     console.log(`YOU WON THE GAME!`);
     buttonDisable();
