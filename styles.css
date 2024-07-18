@@ -18,8 +18,12 @@ body {
   height: 100vh;
 }
 
-.main {
+.column {
   width: 600px;
   height: 600px;
   background-color: aquamarine;
 }
+
+/* .main-btn {
+  
+} */

@@ -1,10 +1,9 @@
-let roundValue = [];
 // Initialize scores and start the game
 let humanScore = 0;
 let computerScore = 0;
-let currentRound = 0;
 let computerChoice;
 let humanChoice;
+const buttons = document.querySelectorAll(".main-btn button");
 // Function to get the computer's choice
 // Randomly returns "rock", "paper", or "scissors"
 function getComputerChoice() {
@@ -20,8 +19,6 @@ function getComputerChoice() {
 
 // Function to get the human's choice
 function getHumanChoice() {
-  const buttons = document.querySelectorAll("button");
-
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       humanChoice = button.id;
@@ -29,14 +26,14 @@ function getHumanChoice() {
 
       computerChoice = getComputerChoice();
       console.log("computer choice", computerChoice);
-      playRound(humanChoice, computerChoice);
+      playGame(humanChoice, computerChoice);
     });
   });
 }
 
 // Function to play a single round
 // Takes human and computer choices as parameters
-function playRound(humanChoice, computerChoice) {
+function playGame(humanChoice, computerChoice) {
   if (humanChoice === computerChoice) {
     console.log(`IT'S A TIE! YOU BOTH CHOSE ${humanChoice.toUpperCase()}!`);
     console.log("human score", humanScore, "computer score", computerScore);
@@ -57,12 +54,28 @@ function playRound(humanChoice, computerChoice) {
     computerScore++;
     console.log("computer score", computerScore);
   }
+
+  if (humanScore === 5) {
+    console.log(`YOU WON THE GAME!`);
+    buttonDisable();
+    return;
+  } else if (computerScore === 5) {
+    console.log(`YOU LOST THE GAME, COMPUTER WINS!`);
+    buttonDisable();
+    return;
+  }
 }
-getHumanChoice();
+
+function buttonDisable() {
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
+}
 // Main function to play the game
-// function playGame() {
-//   // playAgain();
-// }
+function play() {
+  getHumanChoice();
+}
+play();
 
 // function playAgain() {
 //   const play = confirm(`Do you want to play again?`);
@@ -74,4 +87,4 @@ getHumanChoice();
 //   } else return;
 // }
 
-// playGame();
+// playAgain();
