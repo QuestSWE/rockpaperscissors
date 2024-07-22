@@ -24,6 +24,47 @@ body {
   background-color: aquamarine;
 }
 
-/* .main-btn {
-  
-} */
+.grid-container {
+  height: 600px;
+  border: solid red 2px;
+  display: grid;
+  grid-template-areas:
+    "text-top text-top"
+    "human-score computer-score"
+    "human-choice computer-choice"
+    "main-btn main-btn";
+  padding: 10px;
+  column-gap: 10px;
+}
+
+.grid-container div {
+  border: solid red 1px;
+  /* margin: 10px 10px; */
+}
+.text-top {
+  height: 100px;
+  border: solid red 2px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.score {
+  height: 60px;
+}
+
+.choice {
+  height: 300px;
+}
+
+.main-btn {
+  grid-area: main-btn;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.btn {
+  width: 100px;
+  height: 40px;
+}

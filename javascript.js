@@ -4,6 +4,7 @@ let computerScore = 0;
 let computerChoice;
 let humanChoice;
 const buttons = document.querySelectorAll(".main-btn button");
+
 // Function to get the computer's choice
 // Randomly returns "rock", "paper", or "scissors"
 function getComputerChoice() {
