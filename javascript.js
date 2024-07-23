@@ -23,6 +23,7 @@ function getHumanChoice() {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       humanChoice = button.id;
+      getImage();
       console.log("human choice", humanChoice);
 
       computerChoice = getComputerChoice();
@@ -37,7 +38,6 @@ function getHumanChoice() {
 function playGame(humanChoice, computerChoice) {
   if (humanChoice === computerChoice) {
     console.log(`IT'S A TIE! YOU BOTH CHOSE ${humanChoice.toUpperCase()}!`);
-    console.log("human score", humanScore, "computer score", computerScore);
   } else if (
     (humanChoice === "rock" && computerChoice === "scissors") ||
     (humanChoice === "paper" && computerChoice === "rock") ||
@@ -55,6 +55,7 @@ function playGame(humanChoice, computerChoice) {
     computerScore++;
     console.log("computer score", computerScore);
   }
+  scoreTracking();
   winnerAnnouncement();
 }
 
@@ -79,6 +80,59 @@ function buttonDisable() {
 function play() {
   getHumanChoice();
 }
+
+function getImage() {
+  const rock = document.createElement("img");
+  rock.src = "img/rock.png";
+  const paper = document.createElement("img");
+  paper.src = "img/paper.jpg";
+  const scissors = document.createElement("img");
+  scissors.src = "img/scissors.jpeg";
+
+  rock.alt = "pixelated rock image";
+  rock.width = 280;
+  paper.alt = "pixelated paper image";
+  paper.width = 280;
+  scissors.alt = "pixelated paper image";
+  scissors.width = 280;
+
+  if (humanChoice === "rock") {
+    const humanImg = document.querySelector(".human-choice");
+    humanImg.innerHTML = "";
+    humanImg.appendChild(rock);
+  } else if (humanChoice === "paper") {
+    const humanImg = document.querySelector(".human-choice");
+    humanImg.innerHTML = "";
+    humanImg.appendChild(paper);
+  } else if (humanChoice === "scissors") {
+    const humanImg = document.querySelector(".human-choice");
+    humanImg.innerHTML = "";
+    humanImg.appendChild(scissors);
+  }
+  // BUG
+  if (computerChoice === "rock") {
+    const computerImg = document.querySelector(".computer-choice");
+    computerImg.innerHTML = "";
+    computerImg.appendChild(rock);
+  } else if (computerChoice === "paper") {
+    const computerImg = document.querySelector(".computer-choice");
+    computerImg.innerHTML = "";
+    computerImg.appendChild(paper);
+  } else {
+    const computerImg = document.querySelector(".computer-choice");
+    computerImg.innerHTML = "";
+    computerImg.appendChild(scissors);
+  }
+}
+
+function scoreTracking() {
+  const playerScore = document.querySelector("#playScore");
+  playerScore.textContent = `${humanScore}`;
+
+  const cpuScore = document.querySelector("#compScore");
+  cpuScore.textContent = `${computerScore}`;
+}
+
 play();
 
 // function playAgain() {

@@ -39,7 +39,9 @@ body {
 
 .grid-container div {
   border: solid red 1px;
-  /* margin: 10px 10px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .text-top {
   height: 100px;
@@ -50,10 +52,12 @@ body {
 
 .score {
   height: 60px;
+  width: 280px;
 }
 
 .choice {
-  height: 300px;
+  height: 280px;
+  width: 280px;
 }
 
 .main-btn {
