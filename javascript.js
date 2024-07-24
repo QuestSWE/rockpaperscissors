@@ -85,6 +85,13 @@ function buttonDisable() {
   });
 }
 
+/**
+ * Updates the specified container with an image based on the given choice.
+ * Rotates the image 180 degrees if the computer chose scissors.
+ *
+ * @param {string} choice - The choice to display (e.g., "rock", "paper", "scissors").
+ * @param {string} selector - The CSS selector of the container to update.
+ */
 function updateChoiceImage(choice, selector) {
   const imgElement = document.createElement("img");
   imgElement.src = `img/${choice}.png`;
