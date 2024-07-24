@@ -66,9 +66,33 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 20px;
 }
 
 .btn {
   width: 100px;
   height: 40px;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-18px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-18px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.shake {
+  animation: shake 0.2s;
+  animation-timing-function: ease-in-out;
 }

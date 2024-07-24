@@ -1,3 +1,10 @@
+// ██████╗ ██████╗ ███████╗
+// ██╔══██╗██╔══██╗██╔════╝
+// ██████╔╝██████╔╝███████╗
+// ██╔══██╗██╔═══╝ ╚════██║
+// ██║  ██║██║     ███████║
+// ╚═╝  ╚═╝╚═╝     ╚══════╝
+
 // Initialize scores and start the game
 let humanScore = 0;
 let computerScore = 0;
@@ -23,11 +30,11 @@ function getHumanChoice() {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       humanChoice = button.id;
-      getImage();
       console.log("human choice", humanChoice);
 
       computerChoice = getComputerChoice();
       console.log("computer choice", computerChoice);
+      getImage(humanChoice, computerChoice);
       playGame(humanChoice, computerChoice);
     });
   });
@@ -52,6 +59,7 @@ function playGame(humanChoice, computerChoice) {
     console.log(
       `YOU LOSE! ${computerChoice.toUpperCase()} BEATS ${humanChoice.toUpperCase()}!`
     );
+    shakeDiv();
     computerScore++;
     console.log("computer score", computerScore);
   }
@@ -76,52 +84,37 @@ function buttonDisable() {
     button.disabled = true;
   });
 }
-// Main function to play the game
-function play() {
-  getHumanChoice();
+
+function updateChoiceImage(choice, selector) {
+  const imgElement = document.createElement("img");
+  imgElement.src = `img/${choice}.png`;
+  imgElement.alt = `pixelated ${choice} image`;
+  imgElement.width = "280";
+
+  const container = document.querySelector(selector);
+  container.innerHTML = "";
+  container.appendChild(imgElement);
+
+  if (computerChoice === "scissors" && selector === ".computer-choice") {
+    imgElement.style.transform = "rotate(180deg)";
+  }
 }
 
-function getImage() {
-  const rock = document.createElement("img");
-  rock.src = "img/rock.png";
-  const paper = document.createElement("img");
-  paper.src = "img/paper.jpg";
-  const scissors = document.createElement("img");
-  scissors.src = "img/scissors.jpeg";
-
-  rock.alt = "pixelated rock image";
-  rock.width = 280;
-  paper.alt = "pixelated paper image";
-  paper.width = 280;
-  scissors.alt = "pixelated paper image";
-  scissors.width = 280;
-
-  if (humanChoice === "rock") {
-    const humanImg = document.querySelector(".human-choice");
-    humanImg.innerHTML = "";
-    humanImg.appendChild(rock);
-  } else if (humanChoice === "paper") {
-    const humanImg = document.querySelector(".human-choice");
-    humanImg.innerHTML = "";
-    humanImg.appendChild(paper);
-  } else if (humanChoice === "scissors") {
-    const humanImg = document.querySelector(".human-choice");
-    humanImg.innerHTML = "";
-    humanImg.appendChild(scissors);
+function getImage(humanChoice, computerChoice) {
+  if (
+    humanChoice === "rock" ||
+    humanChoice === "paper" ||
+    humanChoice === "scissors"
+  ) {
+    updateChoiceImage(humanChoice, ".human-choice");
   }
-  // BUG
-  if (computerChoice === "rock") {
-    const computerImg = document.querySelector(".computer-choice");
-    computerImg.innerHTML = "";
-    computerImg.appendChild(rock);
-  } else if (computerChoice === "paper") {
-    const computerImg = document.querySelector(".computer-choice");
-    computerImg.innerHTML = "";
-    computerImg.appendChild(paper);
-  } else {
-    const computerImg = document.querySelector(".computer-choice");
-    computerImg.innerHTML = "";
-    computerImg.appendChild(scissors);
+
+  if (
+    computerChoice === "rock" ||
+    computerChoice === "paper" ||
+    computerChoice === "scissors"
+  ) {
+    updateChoiceImage(computerChoice, ".computer-choice");
   }
 }
 
@@ -133,6 +126,18 @@ function scoreTracking() {
   cpuScore.textContent = `${computerScore}`;
 }
 
+function shakeDiv() {
+  const div = document.querySelector("#shakableDiv");
+  div.classList.add("shake");
+
+  setTimeout(() => {
+    div.classList.remove("shake");
+  }, 500);
+}
+
+function play() {
+  getHumanChoice();
+}
 play();
 
 // function playAgain() {
