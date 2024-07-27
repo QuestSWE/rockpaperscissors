@@ -7,7 +7,7 @@
 
 // Initialize scores and start the game
 let humanScore = 0;
-let computerScore = 3;
+let computerScore = 0;
 let computerChoice;
 let humanChoice;
 let textTop;
