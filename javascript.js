@@ -224,16 +224,3 @@ function play() {
   getHumanChoice();
 }
 play();
-
-// function playAgain() {
-//   const play = confirm(`Do you want to play again?`);
-
-//   if (play === true) {
-//     humanScore = 0;
-//     computerScore = 0;
-//     playGame();
-//   } else return;
-// }
-
-// playAgain();
-// let waitingComputer = ['Waiting for Computer', 'Waiting for Computer.', 'Waiting for Computer..', 'Waiting for Computer...'];
