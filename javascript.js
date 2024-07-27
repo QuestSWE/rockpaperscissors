@@ -7,9 +7,10 @@
 
 // Initialize scores and start the game
 let humanScore = 0;
-let computerScore = 0;
+let computerScore = 3;
 let computerChoice;
 let humanChoice;
+let textTop;
 const buttons = document.querySelectorAll(".main-btn button");
 
 // Function to get the computer's choice
@@ -30,10 +31,7 @@ function getHumanChoice() {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       humanChoice = button.id;
-      console.log("human choice", humanChoice);
-
       computerChoice = getComputerChoice();
-      console.log("computer choice", computerChoice);
       getImage(humanChoice, computerChoice);
       playGame(humanChoice, computerChoice);
     });
@@ -43,38 +41,61 @@ function getHumanChoice() {
 // Function to play a single round
 // Takes human and computer choices as parameters
 function playGame(humanChoice, computerChoice) {
+  const delay = 2600;
+  textTop = document.querySelector(".text-top");
   if (humanChoice === computerChoice) {
-    console.log(`IT'S A TIE! YOU BOTH CHOSE ${humanChoice.toUpperCase()}!`);
+    computerLoading();
+    setTimeout(() => {
+      textTop.textContent = `IT'S A TIE! YOU BOTH CHOSE ${humanChoice.toUpperCase()}!`;
+    }, delay);
   } else if (
     (humanChoice === "rock" && computerChoice === "scissors") ||
     (humanChoice === "paper" && computerChoice === "rock") ||
     (humanChoice === "scissors" && computerChoice === "paper")
   ) {
-    humanScore++;
-    console.log(
-      `YOU WON! ${humanChoice.toUpperCase()} BEATS ${computerChoice.toUpperCase()}!`
-    );
-    console.log("human score", humanScore);
+    computerLoading();
+    setTimeout(() => {
+      humanScore++;
+      const audio = new Audio("sound/score.mp3");
+      audio.play();
+      textTop.textContent = `YOU WON! ${humanChoice.toUpperCase()} BEATS ${computerChoice.toUpperCase()}!`;
+      scoreTracking();
+      winnerAnnouncement();
+    }, delay);
   } else {
-    console.log(
-      `YOU LOSE! ${computerChoice.toUpperCase()} BEATS ${humanChoice.toUpperCase()}!`
-    );
-    shakeDiv();
-    computerScore++;
-    console.log("computer score", computerScore);
+    computerLoading();
+    setTimeout(() => {
+      computerScore++;
+      textTop.textContent = `YOU LOSE! ${computerChoice.toUpperCase()} BEATS ${humanChoice.toUpperCase()}!`;
+      shakeDiv();
+      scoreTracking();
+      winnerAnnouncement();
+    }, delay);
   }
-  scoreTracking();
-  winnerAnnouncement();
 }
 
 function winnerAnnouncement() {
+  const delay = 2000;
+  const delayComputer = 1000;
   if (humanScore === 5) {
-    console.log(`YOU WON THE GAME!`);
+    textTop = document.querySelector(".text-top");
     buttonDisable();
+    setTimeout(() => {
+      const audio = new Audio("sound/mario.mp3");
+      audio.play();
+      textTop.textContent = `YOU WON THE GAME!`;
+    }, delay);
+    const audio = new Audio("sound/youwin.mp3");
+    audio.play();
     return;
   } else if (computerScore === 5) {
-    console.log(`YOU LOST THE GAME, COMPUTER WINS!`);
+    textTop = document.querySelector(".text-top");
     buttonDisable();
+    setTimeout(() => {
+      textTop.textContent = `YOU LOST THE GAME, COMPUTER WINS!`;
+      const audio = new Audio("sound/gameover.mp3");
+      audio.play();
+    }, delayComputer);
     return;
   }
 }
@@ -94,7 +115,7 @@ function buttonDisable() {
  */
 function updateChoiceImage(choice, selector) {
   const imgElement = document.createElement("img");
-  imgElement.src = `img/${choice}.png`;
+  imgElement.src = `img/${choice}.png?t=${new Date().getTime()}`;
   imgElement.alt = `pixelated ${choice} image`;
   imgElement.width = "280";
 
@@ -108,6 +129,9 @@ function updateChoiceImage(choice, selector) {
 }
 
 function getImage(humanChoice, computerChoice) {
+  const audio = new Audio("sound/jackpot.mp3");
+  audio.play();
+  const delay = 2200;
   if (
     humanChoice === "rock" ||
     humanChoice === "paper" ||
@@ -121,8 +145,34 @@ function getImage(humanChoice, computerChoice) {
     computerChoice === "paper" ||
     computerChoice === "scissors"
   ) {
-    updateChoiceImage(computerChoice, ".computer-choice");
+    shuffleImages(() => {
+      updateChoiceImage(computerChoice, ".computer-choice");
+    }, delay);
   }
+}
+
+function shuffleImages(callback, duration) {
+  const images = ["img/rock.png", "img/paper.png", "img/scissors.png"];
+  const shuffleInterval = 200;
+  const computerImage = document.querySelector(".computer-choice");
+  let shuffleCount = 0;
+  let currentIndex = 0;
+
+  const shuffle = setInterval(() => {
+    computerImage.innerHTML = "";
+    const imgElement = document.createElement("img");
+    imgElement.src = `${images[currentIndex]}?t=${new Date().getTime()}`;
+    imgElement.width = 280;
+    computerImage.appendChild(imgElement);
+
+    currentIndex = (currentIndex + 1) % images.length;
+    shuffleCount += shuffleInterval;
+
+    if (shuffleCount >= duration) {
+      clearInterval(shuffle);
+      callback();
+    }
+  }, shuffleInterval);
 }
 
 function scoreTracking() {
@@ -137,9 +187,37 @@ function shakeDiv() {
   const div = document.querySelector("#shakableDiv");
   div.classList.add("shake");
 
+  const audio = new Audio("sound/oof.mp3");
+  audio.play();
+
   setTimeout(() => {
     div.classList.remove("shake");
   }, 500);
+}
+
+function computerLoading() {
+  let waitingComputer = [
+    "Waiting for Computer",
+    "Waiting for Computer.",
+    "Waiting for Computer..",
+    "Waiting for Computer...",
+  ];
+  const shuffleInterval = 300;
+  const textTop = document.querySelector(".text-top");
+  let shuffleCount = 0;
+  let shuffleDuration = 2200;
+  let currentIndex = 0;
+
+  const cycle = setInterval(() => {
+    textTop.innerHTML = "";
+    currentIndex = (currentIndex + 1) % waitingComputer.length;
+    shuffleCount += shuffleInterval;
+    textTop.textContent = waitingComputer[currentIndex];
+
+    if (shuffleCount >= shuffleDuration) {
+      clearInterval(cycle);
+    }
+  }, shuffleInterval);
 }
 
 function play() {
@@ -158,3 +236,4 @@ play();
 // }
 
 // playAgain();
+// let waitingComputer = ['Waiting for Computer', 'Waiting for Computer.', 'Waiting for Computer..', 'Waiting for Computer...'];
