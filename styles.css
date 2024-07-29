@@ -80,7 +80,8 @@ body {
 
 .grid-container .text-top,
 .grid-container .score,
-.grid-container .main-btn {
+.grid-container .main-btn,
+.grid-container .choice {
   display: none;
 }
 
