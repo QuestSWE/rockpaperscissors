@@ -11,8 +11,8 @@ body {
   margin: 0;
   background-color: rgb(34, 34, 34);
   color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
+  font-family: "Nintendo DS BIOS", sans-serif;
+  font-size: 30px;
 }
 
 .container {
@@ -26,6 +26,7 @@ body {
   width: 600px;
   height: 600px;
   background-color: rgb(87, 87, 87);
+  position: relative;
 }
 
 .grid-container {
@@ -39,6 +40,7 @@ body {
     "main-btn main-btn";
   padding: 10px;
   column-gap: 10px;
+  position: absolute;
 }
 
 .grid-container div {
@@ -46,12 +48,26 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 20px;
+}
+
+.grid-container .score {
+  align-items: center;
+  justify-content: left;
+  height: 60px;
+  width: 280px;
+  background-color: rgb(34, 34, 34);
+}
+
+.grid-container .score p {
+  margin-left: 15%;
 }
 
 .grid-container .choice {
   height: 280px;
   width: 280px;
   border: none;
+  overflow: hidden;
 }
 
 .text-top {
@@ -59,12 +75,7 @@ body {
   background-color: rgb(34, 34, 34);
   grid-column-start: 1;
   grid-column-end: 3;
-}
-
-.score {
-  height: 60px;
-  width: 280px;
-  background-color: rgb(34, 34, 34);
+  font-size: 48px;
 }
 
 .main-btn {
@@ -77,15 +88,26 @@ body {
   background-color: rgb(34, 34, 34);
 }
 
+#play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  padding: 20px 50px;
+  border-radius: 20px;
+  font-size: 30px;
+  font-family: "Nintendo DS BIOS", sans-serif;
+}
+
 /* .btn {
   width: 100px;
   height: 40px;
   } */
 
 .btn {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 17px;
+  font-family: "Nintendo DS BIOS", sans-serif;
+  font-size: 25px;
   width: 150px;
   padding: 15px;
   font-weight: 500;

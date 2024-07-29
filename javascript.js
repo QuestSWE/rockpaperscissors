@@ -34,6 +34,12 @@ function getHumanChoice() {
       computerChoice = getComputerChoice();
       getImage(humanChoice, computerChoice);
       playGame(humanChoice, computerChoice);
+      buttonDisable();
+      setTimeout(() => {
+        buttons.forEach((button) => {
+          button.disabled = false;
+        });
+      }, 3600);
     });
   });
 }
@@ -165,6 +171,10 @@ function shuffleImages(callback, duration) {
     imgElement.width = 280;
     computerImage.appendChild(imgElement);
 
+    if (currentIndex === 2) {
+      imgElement.style.transform = "rotate(180deg)";
+    }
+
     currentIndex = (currentIndex + 1) % images.length;
     shuffleCount += shuffleInterval;
 
@@ -178,9 +188,13 @@ function shuffleImages(callback, duration) {
 function scoreTracking() {
   const playerScore = document.querySelector("#playScore");
   playerScore.textContent = `${humanScore}`;
+  playerScore.style.fontSize = "30px";
+  playerScore.style.marginLeft = "35px";
 
   const cpuScore = document.querySelector("#compScore");
   cpuScore.textContent = `${computerScore}`;
+  cpuScore.style.fontSize = "30px";
+  cpuScore.style.marginLeft = "35px";
 }
 
 function shakeDiv() {
@@ -220,7 +234,15 @@ function computerLoading() {
   }, shuffleInterval);
 }
 
+function init() {
+  const gridContainer = document.querySelector('.grid-container');
+  if (gridContainer) {
+    gridContainer.remove();
+  }
+}
+
 function play() {
   getHumanChoice();
 }
+
 play();
