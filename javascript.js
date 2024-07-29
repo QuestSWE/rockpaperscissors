@@ -234,15 +234,29 @@ function computerLoading() {
   }, shuffleInterval);
 }
 
-function init() {
-  const gridContainer = document.querySelector('.grid-container');
-  if (gridContainer) {
-    gridContainer.remove();
-  }
+function initializeGame() {
+  const play = document.querySelector("#play");
+  const playButtonContainer = document.querySelector(".play-button-container");
+  const textTop = document.querySelector(".text-top");
+  const score = document.querySelectorAll(".score");
+  const mainBtn = document.querySelector(".main-btn");
+  const gridContainer = document.querySelector(".grid-container");
+
+  play.addEventListener("click", () => {
+    playButtonContainer.style.display = "none";
+    textTop.style.display = "flex";
+    mainBtn.style.display = "flex";
+    score.forEach((score) => (score.style.display = "flex"));
+    gridContainer.style.display = "grid";
+  });
+  textTop.textContent = "First to 5 Points Wins";
 }
 
 function play() {
-  getHumanChoice();
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeGame();
+    getHumanChoice();
+  });
 }
 
 play();
