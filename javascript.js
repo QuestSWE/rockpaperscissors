@@ -11,6 +11,7 @@ let computerScore = 4;
 let computerChoice;
 let humanChoice;
 let textTop;
+let playButton;
 const buttons = document.querySelectorAll(".main-btn button");
 
 // Function to get the computer's choice
@@ -79,29 +80,32 @@ function playGame(humanChoice, computerChoice) {
     }, delay);
   }
 }
-// BUG fix the play again button so it work properly
+
 function winnerAnnouncement() {
   const score = document.querySelectorAll(".score");
   const mainBtn = document.querySelector(".main-btn");
   const choice = document.querySelectorAll(".choice");
-  const playButtonContainer = document.querySelector(".play-button-container");
-  const play = document.querySelector("#play");
+  const playAgainContainer = document.querySelector(
+    ".playAgain-button-container"
+  );
+  const flashingColumn = document.querySelector(".column");
   const delay = 2000;
   const delayComputer = 1000;
 
   if (humanScore === 5) {
     textTop = document.querySelector(".text-top");
     buttonDisable();
+    flashingColumn.classList.add("flashing");
     setTimeout(() => {
       const audio = new Audio("sound/mario.mp3");
-      audio.play();
+
+      // audio.play();
       textTop.textContent = `YOU WON THE GAME!`;
-      playButtonContainer.style.display = "flex";
-      play.style.padding = "20px 20px";
-      play.textContent = "Play Again?";
+      playAgainContainer.style.display = "flex";
+      playAgain.style.padding = "20px 20px";
     }, delay);
     const audio = new Audio("sound/youwin.mp3");
-    audio.play();
+    // audio.play();
     mainBtn.style.display = "none";
     score.forEach((score) => (score.style.display = "none"));
     choice.forEach((choice) => (choice.style.display = "none"));
@@ -112,10 +116,9 @@ function winnerAnnouncement() {
     setTimeout(() => {
       textTop.textContent = `YOU LOST THE GAME, COMPUTER WINS!`;
       const audio = new Audio("sound/gameover.mp3");
-      audio.play();
-      playButtonContainer.style.display = "flex";
-      play.textContent = "Play Again?";
-      play.style.padding = "20px 20px";
+      // audio.play();
+      playAgainContainer.style.display = "flex";
+      playAgain.style.padding = "20px 20px";
     }, delayComputer);
     mainBtn.style.display = "none";
     score.forEach((score) => (score.style.display = "none"));
@@ -154,7 +157,7 @@ function updateChoiceImage(choice, selector) {
 
 function getImage(humanChoice, computerChoice) {
   const audio = new Audio("sound/jackpot.mp3");
-  audio.play();
+  // audio.play();
   const delay = 2200;
   if (
     humanChoice === "rock" ||
@@ -204,15 +207,15 @@ function shuffleImages(callback, duration) {
 }
 
 function scoreTracking() {
-  const playerScore = document.querySelector("#playScore");
-  playerScore.textContent = `${humanScore}`;
-  playerScore.style.fontSize = "30px";
-  playerScore.style.marginLeft = "35px";
+  const playScore = document.querySelector("#playScore");
+  playScore.textContent = `${humanScore}`;
+  playScore.style.fontSize = "30px";
+  playScore.style.marginLeft = "35px";
 
-  const cpuScore = document.querySelector("#compScore");
-  cpuScore.textContent = `${computerScore}`;
-  cpuScore.style.fontSize = "30px";
-  cpuScore.style.marginLeft = "35px";
+  const compScore = document.querySelector("#compScore");
+  compScore.textContent = `${computerScore}`;
+  compScore.style.fontSize = "30px";
+  compScore.style.marginLeft = "35px";
 }
 
 function shakeDiv() {
@@ -253,16 +256,22 @@ function computerLoading() {
 }
 
 function initializeGame() {
-  const play = document.querySelector("#play");
+  playButton = document.querySelector("#play");
   const playButtonContainer = document.querySelector(".play-button-container");
+  const playAgainContainer = document.querySelector(
+    ".playAgain-button-container"
+  );
   const textTop = document.querySelector(".text-top");
   const score = document.querySelectorAll(".score");
   const choice = document.querySelectorAll(".choice");
   const mainBtn = document.querySelector(".main-btn");
   const gridContainer = document.querySelector(".grid-container");
+  const playScore = document.querySelector("#playScore");
+  const compScore = document.querySelector("#compScore");
 
-  play.addEventListener("click", () => {
+  playButton.addEventListener("click", () => {
     playButtonContainer.style.display = "none";
+    playAgainContainer.style.display = "none";
     textTop.style.display = "flex";
     choice.forEach((choice) => (choice.style.display = "flex"));
     mainBtn.style.display = "flex";
@@ -270,12 +279,42 @@ function initializeGame() {
     gridContainer.style.display = "grid";
   });
   textTop.textContent = "First to 5 Points Wins";
+  playScore.textContent = "0";
+  playScore.style.fontSize = "30px";
+  playScore.style.marginLeft = "35px";
+  compScore.textContent = "0";
+  compScore.style.fontSize = "30px";
+  compScore.style.marginLeft = "35px";
+}
+
+function resetGame() {
+  const textTop = document.querySelector(".text-top");
+  const playScore = document.querySelector("#playScore");
+  const compScore = document.querySelector("#compScore");
+
+  textTop.textContent = "First to 5 Points Wins";
+  playScore.textContent = "0";
+  compScore.textContent = "0";
+  humanScore = 0;
+  computerScore = 0;
+
+  if (playButton) {
+    playButton.click();
+  }
 }
 
 function play() {
   document.addEventListener("DOMContentLoaded", () => {
     initializeGame();
     getHumanChoice();
+
+    const playAgain = document.querySelector("#playAgain");
+    const flashingColumn = document.querySelector(".column");
+
+    playAgain.addEventListener("click", () => {
+      flashingColumn.classList.remove("flashing");
+      resetGame();
+    });
   });
 }
 
