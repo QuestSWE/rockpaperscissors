@@ -72,7 +72,6 @@ body {
 }
 
 .grid-container div {
-  border: solid #b63030 1px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,6 +83,7 @@ body {
   justify-content: left;
   height: 60px;
   width: 280px;
+  border: solid #b63030 1px;
   background-color: rgb(34, 34, 34);
 }
 
@@ -100,6 +100,8 @@ body {
 
 .text-top {
   height: 100px;
+  border: solid #b63030 1px;
+
   background-color: rgb(34, 34, 34);
   grid-column-start: 1;
   grid-column-end: 3;
@@ -121,8 +123,11 @@ body {
   justify-content: space-around;
   align-items: center;
   gap: 50px;
+  border: solid #b63030 1px;
+
   background-color: rgb(34, 34, 34);
 }
+
 
 .play-button-container {
   position: absolute;
@@ -164,20 +169,22 @@ body {
 
 #playAgain {
   padding: 20px 26px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   font-size: 30px;
   font-family: "Nintendo DS BIOS", sans-serif;
   background-color: #b63030;
   color: white;
+  border: none;
 }
 
 #play {
   padding: 20px 50px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   font-size: 30px;
   font-family: "Nintendo DS BIOS", sans-serif;
   background-color: #b63030;
   color: white;
+  border: none;
 }
 
 .btn {
