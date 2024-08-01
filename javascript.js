@@ -6,7 +6,7 @@
 // ╚═╝  ╚═╝╚═╝     ╚══════╝
 
 // Initialize scores and start the game
-let humanScore = 4;
+let humanScore = 0;
 let computerScore = 4;
 let computerChoice;
 let humanChoice;
@@ -53,6 +53,8 @@ function playGame(humanChoice, computerChoice) {
   if (humanChoice === computerChoice) {
     computerLoading();
     setTimeout(() => {
+      const audio = new Audio("sound/tie.mp3");
+      audio.play();
       textTop.textContent = `IT'S A TIE! YOU BOTH CHOSE ${humanChoice.toUpperCase()}!`;
     }, delay);
   } else if (
@@ -64,6 +66,7 @@ function playGame(humanChoice, computerChoice) {
     setTimeout(() => {
       humanScore++;
       const audio = new Audio("sound/score.mp3");
+      audio.volume = 0.5;
       audio.play();
       textTop.textContent = `YOU WON! ${humanChoice.toUpperCase()} BEATS ${computerChoice.toUpperCase()}!`;
       scoreTracking();
@@ -90,39 +93,49 @@ function winnerAnnouncement() {
   );
   const flashingColumn = document.querySelector(".column");
   const delay = 2000;
-  const delayComputer = 1000;
+  const delayComputer = 2000;
 
   if (humanScore === 5) {
     textTop = document.querySelector(".text-top");
     buttonDisable();
-    flashingColumn.classList.add("flashing");
     setTimeout(() => {
       const audio = new Audio("sound/mario.mp3");
-
       // audio.play();
+      flashingColumn.classList.add("flashing");
       textTop.textContent = `YOU WON THE GAME!`;
       playAgainContainer.style.display = "flex";
       playAgain.style.padding = "20px 20px";
     }, delay);
+    // cspell:ignore youwin
     const audio = new Audio("sound/youwin.mp3");
     // audio.play();
-    mainBtn.style.display = "none";
-    score.forEach((score) => (score.style.display = "none"));
-    choice.forEach((choice) => (choice.style.display = "none"));
+    setTimeout(() => {
+      mainBtn.style.display = "none";
+      score.forEach((score) => (score.style.display = "none"));
+      choice.forEach((choice) => (choice.style.display = "none"));
+    }, 2000);
     return;
   } else if (computerScore === 5) {
     textTop = document.querySelector(".text-top");
     buttonDisable();
     setTimeout(() => {
       textTop.textContent = `YOU LOST THE GAME, COMPUTER WINS!`;
-      const audio = new Audio("sound/gameover.mp3");
+      const audio = new Audio("sound/lost.mp3");
       // audio.play();
       playAgainContainer.style.display = "flex";
       playAgain.style.padding = "20px 20px";
     }, delayComputer);
-    mainBtn.style.display = "none";
-    score.forEach((score) => (score.style.display = "none"));
-    choice.forEach((choice) => (choice.style.display = "none"));
+
+    setTimeout(() => {
+      playerLost();
+      mainBtn.style.display = "none";
+      score.forEach((score) => (score.style.display = "none"));
+      choice.forEach((choice) => (choice.style.display = "none"));
+    }, 2000);
+
+    setTimeout(() => {
+      continueTimer();
+    }, 4000);
     return;
   }
 }
@@ -157,6 +170,7 @@ function updateChoiceImage(choice, selector) {
 
 function getImage(humanChoice, computerChoice) {
   const audio = new Audio("sound/jackpot.mp3");
+  audio.volume = 0.4;
   // audio.play();
   const delay = 2200;
   if (
@@ -219,14 +233,15 @@ function scoreTracking() {
 }
 
 function shakeDiv() {
-  const div = document.querySelector("#shakableDiv");
-  div.classList.add("shake");
+  const shakableDiv = document.querySelector("#shakableDiv");
+  shakableDiv.classList.add("shake");
 
   const audio = new Audio("sound/oof.mp3");
+  audio.volume = 0.5;
   audio.play();
 
   setTimeout(() => {
-    div.classList.remove("shake");
+    shakableDiv.classList.remove("shake");
   }, 500);
 }
 
@@ -293,6 +308,7 @@ function resetGame() {
   const compScore = document.querySelector("#compScore");
 
   textTop.textContent = "First to 5 Points Wins";
+  textTop.removeAttribute("style");
   playScore.textContent = "0";
   compScore.textContent = "0";
   humanScore = 0;
@@ -301,6 +317,56 @@ function resetGame() {
   if (playButton) {
     playButton.click();
   }
+}
+
+function playerLost() {
+  const column = document.querySelector(".column");
+  column.style.backgroundColor = "black";
+}
+
+// cspell:ignore gameover
+function gameOver() {
+  const gameover = document.querySelector(".game-over");
+  let text = "GAME OVER";
+  let animatedText = text.split("");
+  gameover.textContent = "";
+
+  for (let i = 0; i < animatedText.length; i++) {
+    setTimeout(() => {
+      gameover.textContent += animatedText[i];
+      gameover.style.color = "red";
+      gameover.style.fontSize = "150px";
+    }, i * 200);
+  }
+}
+
+function continueTimer() {
+  const gridContainer = document.querySelector(".grid-container");
+  const audio = new Audio("sound/gameover.mp3");
+  const timer = document.querySelector(".timer");
+  const playAgainContainer = document.querySelector(
+    ".playAgain-button-container"
+  );
+  let text = "Continue?";
+  let spacedText = text.split("").join(" ");
+  textTop.textContent = spacedText;
+  textTop.style.fontSize = "48px";
+  let timeRemaining = 11;
+
+  const countdown = setInterval(() => {
+    timeRemaining--;
+    timer.textContent = timeRemaining;
+
+    if (timeRemaining <= 0) {
+      clearInterval(countdown);
+      gameOver();
+      audio.volume = 0.1;
+      audio.play();
+      gridContainer.removeChild(textTop);
+      playAgainContainer.style.display = "none";
+      timer.textContent = "";
+    }
+  }, 1000);
 }
 
 function play() {
@@ -313,6 +379,7 @@ function play() {
 
     playAgain.addEventListener("click", () => {
       flashingColumn.classList.remove("flashing");
+      flashingColumn.style.backgroundColor = "#575757";
       resetGame();
     });
   });

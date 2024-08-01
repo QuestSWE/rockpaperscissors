@@ -25,7 +25,7 @@ body {
 .column {
   width: 600px;
   height: 600px;
-  background-color: rgb(87, 87, 87);
+  background-color: #575757;
   position: relative;
 }
 
@@ -60,7 +60,7 @@ body {
 .grid-container {
   display: grid;
   height: 600px;
-  border: solid rgb(253, 253, 253) 2px;
+  border: solid #b63030 2px;
   grid-template-areas:
     "text-top text-top"
     "human-score computer-score"
@@ -72,7 +72,7 @@ body {
 }
 
 .grid-container div {
-  border: solid rgb(255, 255, 255) 1px;
+  border: solid #b63030 1px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,6 +104,7 @@ body {
   grid-column-start: 1;
   grid-column-end: 3;
   font-size: 48px;
+  white-space: pre;
 }
 
 .grid-container .text-top,
@@ -136,6 +137,29 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+}
+
+.grid-container .game-over {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  border: none;
+}
+
+.grid-container .timer {
+  position: absolute;
+  border: none;
+  width: 150px;
+  height: 100px;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  color: white;
+  font-size: 70px;
 }
 
 #playAgain {
