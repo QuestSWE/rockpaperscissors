@@ -292,7 +292,7 @@ function initializeGame() {
   const gridContainer = document.querySelector(".grid-container");
   const playScore = document.querySelector("#playScore");
   const compScore = document.querySelector("#compScore");
-  const audio = document.querySelector("#myAudio");
+  const questEntContainer = document.querySelector(".quest-ent-container");
   const startButtonContainer = document.querySelector(
     ".start-button-container"
   );
@@ -301,17 +301,15 @@ function initializeGame() {
   );
 
   startButton.addEventListener("click", () => {
-    startButtonContainer.style.display = "none";
-    playAgainContainer.style.display = "none";
     rps.textContent = "";
     textTop.style.display = "flex";
-    choice.forEach((choice) => (choice.style.display = "flex"));
     mainBtn.style.display = "flex";
-    score.forEach((score) => (score.style.display = "flex"));
+    questEntContainer.textContent = "";
     gridContainer.style.display = "grid";
-
-    audio.volume = 0.4;
-    // audio.play();
+    playAgainContainer.style.display = "none";
+    startButtonContainer.style.display = "none";
+    score.forEach((score) => (score.style.display = "flex"));
+    choice.forEach((choice) => (choice.style.display = "flex"));
   });
   textTop.textContent = "First to 5 Points Wins";
   playScore.textContent = "0";
@@ -411,32 +409,43 @@ function start() {
 function playGame() {
   const rps = document.querySelector(".rps");
   const play = document.querySelector("#play");
+  const audio = document.querySelector("#myAudio");
   const textElement = document.getElementById("rainbowText");
   const text = textElement.textContent;
+  const questEntContainer = document.querySelector(".quest-ent-container");
   const playButtonContainer = document.querySelector(".play-button-container");
   const startButtonContainer = document.querySelector(
     ".start-button-container"
   );
-  let textRps = text;
-  let textArr = textRps.split("");
-  console.log(textArr);
-  rps.textContent = "";
-
-  for (let i = 0; i < textArr.length; i++) {
-    setTimeout(() => {
-      const span = document.createElement("span");
-      span.textContent = textArr[i];
-      span.className = "rainbow-letter";
-      rps.appendChild(span);
-    }, i * 200);
-  }
 
   play.addEventListener("click", () => {
-    startButtonContainer.style.display = "flex";
+    let textRps = text;
+    let textArr = textRps.split("");
+    questEntContainer.classList.add("animate");
     playButtonContainer.style.display = "none";
     rps.style.display = "flex";
-    start();
+    rps.textContent = "";
+    setTimeout(() => {
+      startButtonContainer.classList.add("fade-in");
+      startButtonContainer.style.display = "flex";
+    }, 8000);
+
+    setTimeout(() => {
+      // FIXME do I need this line below?
+      // start();
+      audio.volume = 0.4;
+      audio.play();
+
+      console.log(textArr);
+      for (let i = 0; i < textArr.length; i++) {
+        setTimeout(() => {
+          const span = document.createElement("span");
+          span.textContent = textArr[i];
+          span.className = "rainbow-letter";
+          rps.appendChild(span);
+        }, i * 200);
+      }
+    }, 4000);
   });
 }
-
 playGame();
