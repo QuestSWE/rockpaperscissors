@@ -7,7 +7,7 @@
 
 // Initialize scores and start the game
 let humanScore = 0;
-let computerScore = 4;
+let computerScore = 0;
 let computerChoice;
 let humanChoice;
 let textTop;
@@ -280,6 +280,7 @@ function computerLoading() {
 
 document.addEventListener("DOMContentLoaded", () => {
   initializeGame();
+  getHumanChoice();
 });
 
 function initializeGame() {
@@ -369,6 +370,22 @@ function continueTimer() {
     }
   }, 1000);
 }
+function restart() {
+  const timer = document.querySelector(".timer");
+  const playAgain = document.querySelector("#playAgain");
+  const flashingColumn = document.querySelector(".column");
+
+  if (playAgain) {
+    playAgain.addEventListener("click", () => {
+      flashingColumn.classList.remove("flashing");
+      flashingColumn.style.backgroundColor = "#000000";
+      timer.textContent = "";
+      clearInterval(countdown);
+      resetGame();
+    });
+  }
+}
+document.addEventListener("DOMContentLoaded", restart);
 
 function resetGame() {
   const textTop = document.querySelector(".text-top");
@@ -387,30 +404,12 @@ function resetGame() {
   }
 }
 
-function start() {
-  document.addEventListener("DOMContentLoaded", () => {
-    initializeGame();
-    getHumanChoice();
-
-    const timer = document.querySelector(".timer");
-    const playAgain = document.querySelector("#playAgain");
-    const flashingColumn = document.querySelector(".column");
-
-    playAgain.addEventListener("click", () => {
-      flashingColumn.classList.remove("flashing");
-      flashingColumn.style.backgroundColor = "#575757";
-      timer.textContent = "";
-      clearInterval(countdown);
-      resetGame();
-    });
-  });
-}
-
-function playGame() {
+function playRps() {
   const rps = document.querySelector(".rps");
   const play = document.querySelector("#play");
   const audio = document.querySelector("#myAudio");
   const textElement = document.getElementById("rainbowText");
+  console.log(textElement.textContent);
   const text = textElement.textContent;
   const questEntContainer = document.querySelector(".quest-ent-container");
   const playButtonContainer = document.querySelector(".play-button-container");
@@ -431,10 +430,8 @@ function playGame() {
     }, 8000);
 
     setTimeout(() => {
-      // FIXME do I need this line below?
-      // start();
       audio.volume = 0.4;
-      audio.play();
+      // audio.play();
 
       console.log(textArr);
       for (let i = 0; i < textArr.length; i++) {
@@ -448,4 +445,4 @@ function playGame() {
     }, 4000);
   });
 }
-playGame();
+playRps();
