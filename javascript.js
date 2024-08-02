@@ -408,6 +408,7 @@ function playRps() {
   const rps = document.querySelector(".rps");
   const play = document.querySelector("#play");
   const audio = document.querySelector("#myAudio");
+  const textChrome = document.querySelector(".text-chrome");
   const textElement = document.getElementById("rainbowText");
   console.log(textElement.textContent);
   const text = textElement.textContent;
@@ -421,6 +422,7 @@ function playRps() {
     let textRps = text;
     let textArr = textRps.split("");
     questEntContainer.classList.add("animate");
+    textChrome.textContent = "";
     playButtonContainer.style.display = "none";
     rps.style.display = "flex";
     rps.textContent = "";
@@ -431,7 +433,7 @@ function playRps() {
 
     setTimeout(() => {
       audio.volume = 0.4;
-      // audio.play();
+      audio.play();
 
       console.log(textArr);
       for (let i = 0; i < textArr.length; i++) {
