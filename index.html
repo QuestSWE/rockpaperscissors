@@ -36,18 +36,22 @@
           <div class="human-score score">
             <p>Player Score: <span id="playScore"></span></p>
           </div>
+          <div class="rps">
+            <p class="rainbowRPS" id="rainbowText">ROCK&nbsp;&nbsp PAPER&nbsp;&nbsp SCISSORS</p>
+          </div>
           <div class="computer-score score">
             <p>Computer Score: <span id="compScore"></span></p>
           </div>
           <div class="play-button-container">
-            <button id="play" class="playBtn" type="button">PLAY</button>
+            <button id="play" type="button">PLAY</button>
+          </div>
+          <div class="start-button-container">
+            <button id="start" type="button">START</button>
           </div>
           <div class="game-over"></div>
-            <div class="timer"></div>
+          <div class="timer"></div>
           <div class="playAgain-button-container">
-            <button id="playAgain" class="playBtn" type="button">
-              Play Again
-            </button>
+            <button id="playAgain" type="button">Play Again</button>
           </div>
           <div class="human-choice choice"></div>
           <div class="computer-choice choice"></div>
@@ -71,7 +75,7 @@
         </div>
       </div>
     </div>
-
+    <audio id="myAudio" src="sound/theme.mp3"></audio>
     <script src="javascript.js"></script>
   </body>
 </html>

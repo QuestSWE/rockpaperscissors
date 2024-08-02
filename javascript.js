@@ -11,8 +11,10 @@ let computerScore = 4;
 let computerChoice;
 let humanChoice;
 let textTop;
-let playButton;
+let startButton;
+let countdown;
 const buttons = document.querySelectorAll(".main-btn button");
+const theme = document.getElementById("myAudio");
 
 // Function to get the computer's choice
 // Randomly returns "rock", "paper", or "scissors"
@@ -29,6 +31,7 @@ function getComputerChoice() {
 
 // Function to get the human's choice
 function getHumanChoice() {
+  const audio = document.querySelector("#myAudio");
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       humanChoice = button.id;
@@ -36,6 +39,10 @@ function getHumanChoice() {
       getImage(humanChoice, computerChoice);
       playGame(humanChoice, computerChoice);
       buttonDisable();
+
+      audio.pause();
+      audio.currentTime = 0;
+
       setTimeout(() => {
         buttons.forEach((button) => {
           button.disabled = false;
@@ -54,7 +61,7 @@ function playGame(humanChoice, computerChoice) {
     computerLoading();
     setTimeout(() => {
       const audio = new Audio("sound/tie.mp3");
-      audio.play();
+      // audio.play();
       textTop.textContent = `IT'S A TIE! YOU BOTH CHOSE ${humanChoice.toUpperCase()}!`;
     }, delay);
   } else if (
@@ -67,7 +74,7 @@ function playGame(humanChoice, computerChoice) {
       humanScore++;
       const audio = new Audio("sound/score.mp3");
       audio.volume = 0.5;
-      audio.play();
+      // audio.play();
       textTop.textContent = `YOU WON! ${humanChoice.toUpperCase()} BEATS ${computerChoice.toUpperCase()}!`;
       scoreTracking();
       winnerAnnouncement();
@@ -85,15 +92,16 @@ function playGame(humanChoice, computerChoice) {
 }
 
 function winnerAnnouncement() {
+  const delay = 2000;
+  const delayComputer = 2000;
   const score = document.querySelectorAll(".score");
   const mainBtn = document.querySelector(".main-btn");
   const choice = document.querySelectorAll(".choice");
+  const flashingColumn = document.querySelector(".column");
+  const playAgain = document.querySelector("#playAgain");
   const playAgainContainer = document.querySelector(
     ".playAgain-button-container"
   );
-  const flashingColumn = document.querySelector(".column");
-  const delay = 2000;
-  const delayComputer = 2000;
 
   if (humanScore === 5) {
     textTop = document.querySelector(".text-top");
@@ -238,7 +246,7 @@ function shakeDiv() {
 
   const audio = new Audio("sound/oof.mp3");
   audio.volume = 0.5;
-  audio.play();
+  // audio.play();
 
   setTimeout(() => {
     shakableDiv.classList.remove("shake");
@@ -270,12 +278,13 @@ function computerLoading() {
   }, shuffleInterval);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  initializeGame();
+});
+
 function initializeGame() {
-  playButton = document.querySelector("#play");
-  const playButtonContainer = document.querySelector(".play-button-container");
-  const playAgainContainer = document.querySelector(
-    ".playAgain-button-container"
-  );
+  startButton = document.querySelector("#start");
+  const rps = document.querySelector(".rps");
   const textTop = document.querySelector(".text-top");
   const score = document.querySelectorAll(".score");
   const choice = document.querySelectorAll(".choice");
@@ -283,15 +292,26 @@ function initializeGame() {
   const gridContainer = document.querySelector(".grid-container");
   const playScore = document.querySelector("#playScore");
   const compScore = document.querySelector("#compScore");
+  const audio = document.querySelector("#myAudio");
+  const startButtonContainer = document.querySelector(
+    ".start-button-container"
+  );
+  const playAgainContainer = document.querySelector(
+    ".playAgain-button-container"
+  );
 
-  playButton.addEventListener("click", () => {
-    playButtonContainer.style.display = "none";
+  startButton.addEventListener("click", () => {
+    startButtonContainer.style.display = "none";
     playAgainContainer.style.display = "none";
+    rps.textContent = "";
     textTop.style.display = "flex";
     choice.forEach((choice) => (choice.style.display = "flex"));
     mainBtn.style.display = "flex";
     score.forEach((score) => (score.style.display = "flex"));
     gridContainer.style.display = "grid";
+
+    audio.volume = 0.4;
+    // audio.play();
   });
   textTop.textContent = "First to 5 Points Wins";
   playScore.textContent = "0";
@@ -300,23 +320,6 @@ function initializeGame() {
   compScore.textContent = "0";
   compScore.style.fontSize = "30px";
   compScore.style.marginLeft = "35px";
-}
-
-function resetGame() {
-  const textTop = document.querySelector(".text-top");
-  const playScore = document.querySelector("#playScore");
-  const compScore = document.querySelector("#compScore");
-
-  textTop.textContent = "First to 5 Points Wins";
-  textTop.removeAttribute("style");
-  playScore.textContent = "0";
-  compScore.textContent = "0";
-  humanScore = 0;
-  computerScore = 0;
-
-  if (playButton) {
-    playButton.click();
-  }
 }
 
 function playerLost() {
@@ -353,7 +356,7 @@ function continueTimer() {
   textTop.style.fontSize = "48px";
   let timeRemaining = 11;
 
-  const countdown = setInterval(() => {
+  countdown = setInterval(() => {
     timeRemaining--;
     timer.textContent = timeRemaining;
 
@@ -361,7 +364,7 @@ function continueTimer() {
       clearInterval(countdown);
       gameOver();
       audio.volume = 0.1;
-      audio.play();
+      // audio.play();
       gridContainer.removeChild(textTop);
       playAgainContainer.style.display = "none";
       timer.textContent = "";
@@ -369,20 +372,71 @@ function continueTimer() {
   }, 1000);
 }
 
-function play() {
+function resetGame() {
+  const textTop = document.querySelector(".text-top");
+  const playScore = document.querySelector("#playScore");
+  const compScore = document.querySelector("#compScore");
+
+  textTop.textContent = "First to 5 Points Wins";
+  textTop.removeAttribute("style");
+  playScore.textContent = "0";
+  compScore.textContent = "0";
+  humanScore = 0;
+  computerScore = 0;
+
+  if (startButton) {
+    startButton.click();
+  }
+}
+
+function start() {
   document.addEventListener("DOMContentLoaded", () => {
     initializeGame();
     getHumanChoice();
 
+    const timer = document.querySelector(".timer");
     const playAgain = document.querySelector("#playAgain");
     const flashingColumn = document.querySelector(".column");
 
     playAgain.addEventListener("click", () => {
       flashingColumn.classList.remove("flashing");
       flashingColumn.style.backgroundColor = "#575757";
+      timer.textContent = "";
+      clearInterval(countdown);
       resetGame();
     });
   });
 }
 
-play();
+function playGame() {
+  const rps = document.querySelector(".rps");
+  const play = document.querySelector("#play");
+  const textElement = document.getElementById("rainbowText");
+  const text = textElement.textContent;
+  const playButtonContainer = document.querySelector(".play-button-container");
+  const startButtonContainer = document.querySelector(
+    ".start-button-container"
+  );
+  let textRps = text;
+  let textArr = textRps.split("");
+  console.log(textArr);
+  rps.textContent = "";
+
+  for (let i = 0; i < textArr.length; i++) {
+    setTimeout(() => {
+      const span = document.createElement("span");
+      span.textContent = textArr[i];
+      span.className = "rainbow-letter";
+      rps.appendChild(span);
+    }, i * 200);
+  }
+
+  play.addEventListener("click", () => {
+    startButtonContainer.style.display = "flex";
+    playButtonContainer.style.display = "none";
+    rps.style.display = "flex";
+    start();
+  });
+}
+
+playGame();
