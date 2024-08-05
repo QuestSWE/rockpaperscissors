@@ -104,7 +104,6 @@ function winnerAnnouncement() {
   const playAgain = document.querySelector("#playAgain");
 
   if (humanScore === 5) {
-    // btn.forEach((btn) => (btn.style.display = "none"));
     textTop = document.querySelector(".text-top");
     setTimeout(() => {
       const audio = new Audio("sound/mario.mp3");
@@ -129,7 +128,6 @@ function winnerAnnouncement() {
 
     return;
   } else if (computerScore === 5) {
-    // btn.forEach((btn) => (btn.style.display = "none"));
     textTop = document.querySelector(".text-top");
     setTimeout(() => {
       textTop.textContent = `YOU LOST THE GAME, COMPUTER WINS!`;
@@ -493,9 +491,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("background-video");
 
   video.addEventListener("timeupdate", () => {
-    const endThreshold = 6; // seconds before the end to restart the video
+    const endThreshold = 6;
     if (video.duration - video.currentTime <= endThreshold) {
-      video.currentTime = 0; // Restart video from the beginning
+      video.currentTime = 0; 
       video.play();
     }
   });
