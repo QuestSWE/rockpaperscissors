@@ -15,6 +15,27 @@ body {
   color: white;
   font-family: "Nintendo DS BIOS", sans-serif;
   font-size: 30px;
+  overflow: hidden;
+}
+
+video-background {
+  position: relative;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  overflow: hidden;
+}
+
+#background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1; /* Places the video behind content */
+  transform: translate(-50%, -50%); /* Centers the video */
+  object-fit: cover; /* Ensures video covers the area */
 }
 
 .container {
@@ -27,7 +48,7 @@ body {
 .column {
   width: 600px;
   height: 600px;
-  background-color: #000000;
+  background-color: #050505;
   position: relative;
   overflow: hidden;
 }
@@ -103,7 +124,6 @@ body {
 .text-top {
   height: 100px;
   border: solid #b63030 1px;
-
   background-color: rgb(34, 34, 34);
   grid-column-start: 1;
   grid-column-end: 3;
@@ -117,7 +137,9 @@ body {
 .grid-container .choice,
 .grid-container .rps,
 .grid-container .start-button-container,
-.grid-container .playAgain-button-container {
+.grid-container .playAgain-button-container,
+.grid-container .youWon,
+.grid-container .youLost {
   display: none;
 }
 
@@ -147,7 +169,7 @@ body {
 
 .start-button-container {
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
@@ -191,6 +213,11 @@ body {
   z-index: 1;
 }
 
+.by-quest a {
+  color: white;
+  text-decoration: none;
+}
+
 .grid-container .game-over {
   position: absolute;
   width: 100%;
@@ -199,6 +226,25 @@ body {
   transform: translate(-50%, -50%);
   z-index: 1;
   border: none;
+}
+
+.youWon {
+  position: absolute;
+  width: 100%;
+  font-size: 180px;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.youLost {
+  position: absolute;
+  width: 100%;
+  font-size: 180px;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 .grid-container .timer {
@@ -220,7 +266,7 @@ body {
   font-family: "Nintendo DS BIOS", sans-serif;
   background-color: #b63030;
   color: white;
-  border: none;
+  /* border: none; */
   cursor: pointer;
 }
 
@@ -246,6 +292,7 @@ body {
   font-family: "Nintendo DS BIOS", sans-serif;
   font-size: 25px;
   width: 150px;
+  height: 60.25px;
   padding: 15px;
   font-weight: 500;
   background: #b63030;
@@ -283,14 +330,18 @@ body {
   text-align: center;
   z-index: 3;
   bottom: -95px;
+  font-size: 20px;
 }
 
 .quest-ent {
   padding-bottom: 20px;
 }
+.quest-ent span {
+  font-weight: bold;
+}
 
 .quest-ent-container.animate {
-  animation: moveUp 4s ease-out forwards;
+  animation: moveUp 3s ease-out forwards;
 }
 
 @keyframes moveUp {
@@ -298,34 +349,34 @@ body {
     transform: translateY(100%);
   }
   to {
-    transform: translateY(-900%);
+    transform: translateY(-1200%);
   }
 }
 
 @keyframes rainbow {
   0% {
-    color: red;
+    color: #00e5ff;
   }
   14% {
-    color: orange;
+    color: #0099ff;
   }
   28% {
-    color: yellow;
+    color: #0066cc;
   }
   42% {
-    color: green;
+    color: #0044aa;
   }
   57% {
-    color: blue;
+    color: #002288;
   }
   71% {
-    color: indigo;
+    color: #001166;
   }
   85% {
-    color: violet;
+    color: #000055;
   }
   100% {
-    color: red;
+    color: #00e5ff;
   }
 }
 
@@ -340,8 +391,9 @@ body {
 
 .rainbow-letter {
   display: inline-block;
-  /* animation: rainbow 5s linear infinite; */
   animation: fadeIn 1s ease forwards, rainbow 5s linear infinite;
+  text-shadow: 0 0 2px #ffffff, 0 0 4px #ffffff, 0 0 6px #0055ff,
+    0 0 8px #0055ff, 0 0 10px #0055ff, 0 0 12px #0055ff, 0 0 14px #0055ff; /* Reduced glow */
 
   animation-fill-mode: backwards;
 }

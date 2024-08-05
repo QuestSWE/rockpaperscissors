@@ -29,62 +29,79 @@
     <link rel="manifest" href="/favicon//site.webmanifest" />
   </head>
   <body>
-    <div class="container">
-      <div class="column" id="shakableDiv">
-        <div class="grid-container">
-          <div class="text-top item-a"></div>
-          <div class="human-score score">
-            <p>Player Score: <span id="playScore"></span></p>
-          </div>
-          <div class="quest-ent-container">
-            <div class="quest-ent">Quest Entertainment</div>
-            <div>Present</div>
-          </div>
-          <div class="text-chrome">
-            <div class="chrome shine" data-text="RPS">
-              RPS<span class="spark"></span>
+    <div class="video-background">
+      <video autoplay muted loop id="background-video">
+        <source src="/videos/space.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="container">
+        <div class="column" id="shakableDiv">
+          <div class="grid-container">
+            <div class="text-top item-a"></div>
+            <div class="human-score score">
+              <p>Player Score: <span id="playScore"></span></p>
             </div>
-            <div class="chrome shine">
-              <span class="spark spark-offset"></span>
+            <div class="quest-ent-container">
+              <div class="quest-ent">
+                <p><span>Quest </span>&nbsp;Entertainment</p>
+              </div>
+              <div>Presents</div>
             </div>
-          </div>
-          <div class="rps">
-            <!-- prettier-ignore -->
-            <p class="rainbowRPS" id="rainbowText">ROCK&nbsp;PAPER&nbsp;SCISSORS</p>
-          </div>
-          <div class="computer-score score">
-            <p>Computer Score: <span id="compScore"></span></p>
-          </div>
-          <div class="play-button-container">
-            <button id="play" type="button">PLAY</button>
-          </div>
-          <div class="start-button-container">
-            <button id="start" type="button">START</button>
-          </div>
-          <div class="by-quest">By Quest 2024</div>
-          <div class="game-over"></div>
-          <div class="timer"></div>
-          <div class="playAgain-button-container">
-            <button id="playAgain" type="button">Play Again</button>
-          </div>
-          <div class="human-choice choice"></div>
-          <div class="computer-choice choice"></div>
-          <div class="main-btn">
-            <button id="rock" class="btn" type="button">
-              <span class="transition"></span>
-              <span class="gradient"></span>
-              <span class="label">Rock</span>
-            </button>
-            <button id="paper" class="btn" type="button">
-              <span class="transition"></span>
-              <span class="gradient"></span>
-              <span class="label">Paper</span>
-            </button>
-            <button id="scissors" class="btn" type="button">
-              <span class="transition"></span>
-              <span class="gradient"></span>
-              <span class="label">Scissors</span>
-            </button>
+            <div class="text-chrome">
+              <div class="chrome shine" data-text="RPS">
+                RPS<span class="spark"></span>
+              </div>
+              <div class="chrome shine">
+                <span class="spark spark-offset"></span>
+              </div>
+            </div>
+            <div class="rps">
+              <!-- prettier-ignore -->
+              <p class="rainbowRPS" id="rainbowText">ROCK&nbsp;PAPER&nbsp;SCISSORS</p>
+            </div>
+            <div class="computer-score score">
+              <p>Computer Score: <span id="compScore"></span></p>
+            </div>
+            <div class="play-button-container">
+              <button id="play" type="button">PLAY</button>
+            </div>
+            <div class="start-button-container">
+              <button id="start" type="button">START</button>
+            </div>
+            <div class="by-quest">
+              <a
+                href="https://github.com/QuestSWE"
+                target="_blank"
+                rel="noopener"
+                >By Quest 2024</a
+              >
+            </div>
+            <div class="game-over"></div>
+            <div class="timer"></div>
+            <div class="playAgain-button-container">
+              <button id="playAgain" type="button">Play Again</button>
+            </div>
+            <div class="youWon">YOU WON!</div>
+            <div class="youLost">YOU LOST!</div>
+            <div class="human-choice choice"></div>
+            <div class="computer-choice choice"></div>
+            <div class="main-btn">
+              <button id="rock" class="btn" type="button">
+                <span class="transition"></span>
+                <span class="gradient"></span>
+                <span class="label">Rock</span>
+              </button>
+              <button id="paper" class="btn" type="button">
+                <span class="transition"></span>
+                <span class="gradient"></span>
+                <span class="label">Paper</span>
+              </button>
+              <button id="scissors" class="btn" type="button">
+                <span class="transition"></span>
+                <span class="gradient"></span>
+                <span class="label">Scissors</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

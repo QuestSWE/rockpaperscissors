@@ -61,7 +61,7 @@ function playGame(humanChoice, computerChoice) {
     computerLoading();
     setTimeout(() => {
       const audio = new Audio("sound/tie.mp3");
-      // audio.play();
+      audio.play();
       textTop.textContent = `IT'S A TIE! YOU BOTH CHOSE ${humanChoice.toUpperCase()}!`;
     }, delay);
   } else if (
@@ -72,9 +72,9 @@ function playGame(humanChoice, computerChoice) {
     computerLoading();
     setTimeout(() => {
       humanScore++;
-      const audio = new Audio("sound/score.mp3");
+      const audio = new Audio("sound/win.mp3");
       audio.volume = 0.5;
-      // audio.play();
+      audio.play();
       textTop.textContent = `YOU WON! ${humanChoice.toUpperCase()} BEATS ${computerChoice.toUpperCase()}!`;
       scoreTracking();
       winnerAnnouncement();
@@ -94,49 +94,54 @@ function playGame(humanChoice, computerChoice) {
 function winnerAnnouncement() {
   const delay = 2000;
   const delayComputer = 2000;
-  const score = document.querySelectorAll(".score");
+  const btn = document.querySelectorAll(".btn");
   const mainBtn = document.querySelector(".main-btn");
+  const score = document.querySelectorAll(".score");
   const choice = document.querySelectorAll(".choice");
+  const youWon = document.querySelector(".youWon");
+  const youLost = document.querySelector(".youLost");
   const flashingColumn = document.querySelector(".column");
   const playAgain = document.querySelector("#playAgain");
-  const playAgainContainer = document.querySelector(
-    ".playAgain-button-container"
-  );
 
   if (humanScore === 5) {
+    // btn.forEach((btn) => (btn.style.display = "none"));
     textTop = document.querySelector(".text-top");
-    buttonDisable();
     setTimeout(() => {
       const audio = new Audio("sound/mario.mp3");
-      // audio.play();
+      audio.play();
+      youWon.style.display = "flex";
+      mainBtn.style.display = "none";
       flashingColumn.classList.add("flashing");
       textTop.textContent = `YOU WON THE GAME!`;
-      playAgainContainer.style.display = "flex";
       playAgain.style.padding = "20px 20px";
     }, delay);
     // cspell:ignore youwin
     const audio = new Audio("sound/youwin.mp3");
-    // audio.play();
+    audio.play();
     setTimeout(() => {
-      mainBtn.style.display = "none";
       score.forEach((score) => (score.style.display = "none"));
       choice.forEach((choice) => (choice.style.display = "none"));
     }, 2000);
+
+    setTimeout(() => {
+      continueTimer();
+    }, 4000);
+
     return;
   } else if (computerScore === 5) {
+    // btn.forEach((btn) => (btn.style.display = "none"));
     textTop = document.querySelector(".text-top");
-    buttonDisable();
     setTimeout(() => {
       textTop.textContent = `YOU LOST THE GAME, COMPUTER WINS!`;
       const audio = new Audio("sound/lost.mp3");
-      // audio.play();
-      playAgainContainer.style.display = "flex";
+      audio.play();
+      youLost.style.display = "flex";
+      mainBtn.style.display = "none";
       playAgain.style.padding = "20px 20px";
     }, delayComputer);
 
     setTimeout(() => {
       playerLost();
-      mainBtn.style.display = "none";
       score.forEach((score) => (score.style.display = "none"));
       choice.forEach((choice) => (choice.style.display = "none"));
     }, 2000);
@@ -177,9 +182,9 @@ function updateChoiceImage(choice, selector) {
 }
 
 function getImage(humanChoice, computerChoice) {
-  const audio = new Audio("sound/jackpot.mp3");
-  audio.volume = 0.4;
-  // audio.play();
+  const audio = new Audio("sound/shuffle.mp3");
+  audio.volume = 0.8;
+  audio.play();
   const delay = 2200;
   if (
     humanChoice === "rock" ||
@@ -244,9 +249,9 @@ function shakeDiv() {
   const shakableDiv = document.querySelector("#shakableDiv");
   shakableDiv.classList.add("shake");
 
-  const audio = new Audio("sound/oof.mp3");
+  const audio = new Audio("sound/losepoint.mp3");
   audio.volume = 0.5;
-  // audio.play();
+  audio.play();
 
   setTimeout(() => {
     shakableDiv.classList.remove("shake");
@@ -290,6 +295,7 @@ function initializeGame() {
   const score = document.querySelectorAll(".score");
   const choice = document.querySelectorAll(".choice");
   const mainBtn = document.querySelector(".main-btn");
+  const byQuest = document.querySelector(".by-quest");
   const gridContainer = document.querySelector(".grid-container");
   const playScore = document.querySelector("#playScore");
   const compScore = document.querySelector("#compScore");
@@ -307,6 +313,7 @@ function initializeGame() {
     mainBtn.style.display = "flex";
     questEntContainer.textContent = "";
     gridContainer.style.display = "grid";
+    byQuest.style.display = "none";
     playAgainContainer.style.display = "none";
     startButtonContainer.style.display = "none";
     score.forEach((score) => (score.style.display = "flex"));
@@ -340,12 +347,32 @@ function gameOver() {
       gameover.style.fontSize = "150px";
     }, i * 200);
   }
+  backToMenu();
+}
+
+function backToMenu() {
+  setTimeout(() => {
+    const byQuest = document.querySelector(".by-quest");
+    const gameover = document.querySelector(".game-over");
+    const textChrome = document.querySelector(".text-chrome");
+    const playButtonContainer = document.querySelector(
+      ".play-button-container"
+    );
+
+    gameover.textContent = "";
+    byQuest.style.display = "flex";
+    textChrome.style.display = "flex";
+    playButtonContainer.style.display = "flex";
+    location.reload();
+  }, 5000);
 }
 
 function continueTimer() {
   const gridContainer = document.querySelector(".grid-container");
   const audio = new Audio("sound/gameover.mp3");
   const timer = document.querySelector(".timer");
+  const youWon = document.querySelector(".youWon");
+  const youLost = document.querySelector(".youLost");
   const playAgainContainer = document.querySelector(
     ".playAgain-button-container"
   );
@@ -358,13 +385,16 @@ function continueTimer() {
   countdown = setInterval(() => {
     timeRemaining--;
     timer.textContent = timeRemaining;
+    playAgainContainer.style.display = "flex";
 
     if (timeRemaining <= 0) {
       clearInterval(countdown);
       gameOver();
       audio.volume = 0.1;
-      // audio.play();
+      audio.play();
       gridContainer.removeChild(textTop);
+      youWon.style.display = "none";
+      youLost.style.display = "none";
       playAgainContainer.style.display = "none";
       timer.textContent = "";
     }
@@ -372,14 +402,22 @@ function continueTimer() {
 }
 function restart() {
   const timer = document.querySelector(".timer");
+  const youWon = document.querySelector(".youWon");
+  const btn = document.querySelectorAll(".btn");
+  const youLost = document.querySelector(".youLost");
+  const mainBtn = document.querySelector(".main-btn");
   const playAgain = document.querySelector("#playAgain");
   const flashingColumn = document.querySelector(".column");
 
   if (playAgain) {
     playAgain.addEventListener("click", () => {
       flashingColumn.classList.remove("flashing");
-      flashingColumn.style.backgroundColor = "#000000";
+      flashingColumn.style.backgroundColor = "#050505";
       timer.textContent = "";
+      youWon.style.display = "none";
+      youLost.style.display = "none";
+      mainBtn.style.display = "flex";
+      btn.forEach((btn) => (btn.style.display = "block"));
       clearInterval(countdown);
       resetGame();
     });
@@ -421,11 +459,15 @@ function playRps() {
   play.addEventListener("click", () => {
     let textRps = text;
     let textArr = textRps.split("");
+    const questEntAudio = new Audio("sound/questent.mp3");
     questEntContainer.classList.add("animate");
-    textChrome.textContent = "";
+    textChrome.style.display = "none";
     playButtonContainer.style.display = "none";
     rps.style.display = "flex";
     rps.textContent = "";
+
+    questEntAudio.volume = 0.4;
+    questEntAudio.play();
     setTimeout(() => {
       startButtonContainer.classList.add("fade-in");
       startButtonContainer.style.display = "flex";
@@ -447,4 +489,16 @@ function playRps() {
     }, 4000);
   });
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.getElementById("background-video");
+
+  video.addEventListener("timeupdate", () => {
+    const endThreshold = 6; // seconds before the end to restart the video
+    if (video.duration - video.currentTime <= endThreshold) {
+      video.currentTime = 0; // Restart video from the beginning
+      video.play();
+    }
+  });
+});
+
 playRps();
